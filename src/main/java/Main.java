@@ -12,13 +12,20 @@ public class Main {
         int orderedAmountOfProductD = Integer.parseInt(input[4]);
 
         Client client = new Client();
+        Product product = new Product();
 
-        double productACost = client.calculateProductAAndBCost(orderedAmountOfProductA, ProductConstants.UNIT_COST_PRODUCT_A, ProductConstants.MARKUP_PRODUCT_A);
-        double productBCost = client.calculateProductAAndBCost(orderedAmountOfProductB, ProductConstants.MARKUP_PRODUCT_B, ProductConstants.UNIT_COST_PRODUCT_B);
-        double productCCost = client.calculateProductCAndDCost(orderedAmountOfProductC, ProductConstants.MARKUP_PRODUCT_C, ProductConstants.UNIT_COST_PRODUCT_C);
-        double productDCost = client.calculateProductCAndDCost(orderedAmountOfProductD, ProductConstants.MARKUP_PRODUCT_D, ProductConstants.UNIT_COST_PRODUCT_D);
+        if (client.getClients().contains(clientID)) {
+            double productACost = product.calculateProductAAndBCost(orderedAmountOfProductA, ProductConstants.MARKUP_PRODUCT_A, ProductConstants.UNIT_COST_PRODUCT_A);
+            double productBCost = product.calculateProductAAndBCost(orderedAmountOfProductB, ProductConstants.MARKUP_PRODUCT_B, ProductConstants.UNIT_COST_PRODUCT_B);
+            double productCCost = product.calculateProductCAndDCost(orderedAmountOfProductC, ProductConstants.MARKUP_PRODUCT_C, ProductConstants.UNIT_COST_PRODUCT_C);
+            double productDCost = product.calculateProductCAndDCost(orderedAmountOfProductD, ProductConstants.MARKUP_PRODUCT_D, ProductConstants.UNIT_COST_PRODUCT_D);
 
-        double productBPromotion = client.calculateProductBPromotion(productBCost, ProductConstants.PROMOTION_PRODUCT_B);
+            double productBPromotion = product.calculateProductBPromotion(productBCost, ProductConstants.PROMOTION_PRODUCT_B);
+            double productDPromotion = product.calculateProductDPromotion
+                    (orderedAmountOfProductD, ProductConstants.PROMOTION_PRODUCT_D, ProductConstants.MARKUP_PRODUCT_D, ProductConstants.UNIT_COST_PRODUCT_D);
+        } else {
+            throw new IllegalArgumentException("No such client listed!");
+        }
 
 
     }

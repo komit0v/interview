@@ -11,4 +11,5 @@ public final class ProductConstants {
 
     static final double UNIT_COST_PRODUCT_D = 0.60;
     static final int MARKUP_PRODUCT_D = 1;
+    static final double PROMOTION_PRODUCT_D = 3;
 }
