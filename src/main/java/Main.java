@@ -39,7 +39,7 @@ public class Main {
                 productACost = product.calculateProductAAndBCost(orderedAmountOfProductA, ProductConstants.MARKUP_PRODUCT_A, ProductConstants.UNIT_COST_PRODUCT_A);
                 sb.append(String.format
                         ("Units ordered: %d, Base Unit Price: %.2f EUR, Line Total: %.2f EUR",
-                                orderedAmountOfProductA, baseUnitPriceProductA,productACost)).append(System.lineSeparator());
+                                orderedAmountOfProductA, baseUnitPriceProductA, productACost)).append(System.lineSeparator());
             }
 
             if (orderedAmountOfProductB != 0) {
@@ -47,7 +47,7 @@ public class Main {
                 productBCostWithPromotion = product.calculateProductBPromotion(productBCost, ProductConstants.PROMOTION_PRODUCT_B);
                 sb.append(String.format
                         ("Units ordered: %d, Base Unit Price: %.2f EUR, Promotional Unit Price: %.2f EUR, Line Total: %.2f EUR",
-                                orderedAmountOfProductB, baseUnitPriceProductB, promotionalUnitPriceProductB,productBCost)).append(System.lineSeparator());
+                                orderedAmountOfProductB, baseUnitPriceProductB, promotionalUnitPriceProductB, productBCost)).append(System.lineSeparator());
             }
 
             if (orderedAmountOfProductC != 0) {
@@ -63,7 +63,7 @@ public class Main {
                         (orderedAmountOfProductD, ProductConstants.PROMOTION_PRODUCT_D, ProductConstants.MARKUP_PRODUCT_D, ProductConstants.UNIT_COST_PRODUCT_D);
                 sb.append(String.format
                         ("Units ordered: %d, Base Unit Price: %.2f EUR, Promotional Unit Price: %.2f EUR, Line Total: %.2f EUR",
-                                orderedAmountOfProductD, baseUnitPriceProductD, promotionalUnitPriceProductD,productDCost)).append(System.lineSeparator());
+                                orderedAmountOfProductD, baseUnitPriceProductD, promotionalUnitPriceProductD, productDCost)).append(System.lineSeparator());
 
             }
 
@@ -74,6 +74,7 @@ public class Main {
                 totalPriceAfterDiscount = client.calculateBasicClientDiscount(totalPriceWithOutDiscount, ClientConstants.CLIENT_ONE_BASIC_DISCOUNT);
                 discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
                 sb.append(String.format("Basic client discount: -%.2f EUR", discount)).append(System.lineSeparator());
+
                 if (totalPriceAfterDiscount > 30000) {
                     totalPriceAfterDiscount = client.calculateAdditionalClientDiscount(totalPriceAfterDiscount, ClientConstants.CLIENT_ONE_ABOVE_30000_DISCOUNT);
                     discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
@@ -83,6 +84,7 @@ public class Main {
                 totalPriceAfterDiscount = client.calculateBasicClientDiscount(totalPriceWithOutDiscount, ClientConstants.CLIENT_TWO_BASIC_DISCOUNT);
                 discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
                 sb.append(String.format("Basic client discount: -%.2f EUR", discount)).append(System.lineSeparator());
+
                 if (totalPriceWithOutDiscount > 10000 && totalPriceWithOutDiscount <= 30000) {
                     totalPriceAfterDiscount = client.calculateAdditionalClientDiscount(totalPriceAfterDiscount, ClientConstants.CLIENT_TWO_ABOVE_10000_DISCOUNT);
                     discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
@@ -92,10 +94,12 @@ public class Main {
                     discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
                     sb.append(String.format("Additional volume discount: -%.2f EUR", discount)).append(System.lineSeparator());
                 }
+
             } else if (clientID == 3) {
                 totalPriceAfterDiscount = client.calculateBasicClientDiscount(totalPriceWithOutDiscount, ClientConstants.CLIENT_THREE_BASIC_DISCOUNT);
                 discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
                 sb.append(String.format("Basic client discount: -%.2fEUR", discount)).append(System.lineSeparator());
+
                 if (totalPriceWithOutDiscount > 10000 && totalPriceWithOutDiscount <= 30000) {
                     totalPriceAfterDiscount = client.calculateAdditionalClientDiscount(totalPriceAfterDiscount, ClientConstants.CLIENT_THREE_ABOVE_10000_DISCOUNT);
                     discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
@@ -105,10 +109,12 @@ public class Main {
                     discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
                     sb.append(String.format("Additional volume discount: -%.2f EUR", discount)).append(System.lineSeparator());
                 }
+
             } else if (clientID == 4) {
                 totalPriceAfterDiscount = client.calculateBasicClientDiscount(totalPriceWithOutDiscount, ClientConstants.CLIENT_FOUR_BASIC_DISCOUNT);
                 discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
                 sb.append(String.format("Basic client discount: -%.2f EUR", discount)).append(System.lineSeparator());
+
                 if (totalPriceWithOutDiscount > 10000 && totalPriceWithOutDiscount <= 30000) {
                     totalPriceAfterDiscount = client.calculateAdditionalClientDiscount(totalPriceAfterDiscount, ClientConstants.CLIENT_FOUR_ABOVE_10000_DISCOUNT);
                     discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
@@ -118,6 +124,7 @@ public class Main {
                     discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
                     sb.append(String.format("Additional volume discount: -%.2f EUR", discount)).append(System.lineSeparator());
                 }
+
             } else if (clientID == 5) {
                 if (totalPriceWithOutDiscount > 10000 && totalPriceWithOutDiscount <= 30000) {
                     totalPriceAfterDiscount = client.calculateAdditionalClientDiscount(totalPriceWithOutDiscount, ClientConstants.CLIENT_FIVE_ABOVE_10000_DISCOUNT);
@@ -127,7 +134,7 @@ public class Main {
                     totalPriceAfterDiscount = client.calculateAdditionalClientDiscount(totalPriceWithOutDiscount, ClientConstants.CLIENT_FIVE_ABOVE_30000_DISCOUNT);
                     discount = totalPriceWithOutDiscount - totalPriceAfterDiscount;
                     sb.append(String.format("Additional volume discount: -%.2f EUR", discount)).append(System.lineSeparator());
-                }else{
+                } else {
                     totalPriceAfterDiscount = totalPriceWithOutDiscount;
                 }
             }
