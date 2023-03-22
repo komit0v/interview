@@ -20,8 +20,6 @@ public class Client {
         clients.add(5);
     }
 
-
-
     public double calculateBasicClientDiscount(double totalPrice, double discount){
         if(discount != 0){
             return totalPrice -= totalPrice * discount;
