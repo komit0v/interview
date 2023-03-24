@@ -1,7 +1,7 @@
 package POJOS;
 
-import static POJOS.Markup.PERCENTAGE;
-import static POJOS.Markup.PER_UNIT;
+import static POJOS.Markup.*;
+import static POJOS.Promotion.INVALID_PROMOTION_TYPE;
 
 public final class Product {
     private String name;
@@ -9,10 +9,6 @@ public final class Product {
 
     private Markup markup;
     private Promotion promotion;
-
-    public Promotion getPromotion() {
-        return promotion;
-    }
 
     public Product(String name, double unitCost, Markup markup, Promotion promotion) {
         this.name = name;
@@ -29,26 +25,29 @@ public final class Product {
         return this.unitCost;
     }
 
-    //ToDo throw exception instead of 0
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
     public double calcUnitPrice() {
         if (markup.getType().equals(PERCENTAGE)) {
             return unitCost + (unitCost * markup.getAmount());
         } else if (markup.getType().equals(PER_UNIT)) {
             return unitCost + markup.getAmount();
         } else {
-            return 0;
+            throw new IllegalArgumentException(INVALID_MARKUP_TYPE);
         }
     }
 
-    //ToDo throw exception
-
-    public double calcPromotionalUnitPrice(){
+    public double calcPromotionalUnitPrice() {
         double calcUnitPrice = calcUnitPrice();
-        if(promotion.getType().equals(Promotion.NONE)){
-          return  calcUnitPrice;
-        } else if (promotion.getType().equals(Promotion.PERCENTAGE)){
+        if (promotion.getType().equals(Promotion.NONE)) {
+            return calcUnitPrice;
+        } else if (promotion.getType().equals(Promotion.PERCENTAGE)) {
             return calcUnitPrice - (calcUnitPrice * promotion.getAmount());
+        } else {
+            throw new IllegalArgumentException(INVALID_PROMOTION_TYPE);
         }
-        return calcUnitPrice;
+
     }
 }

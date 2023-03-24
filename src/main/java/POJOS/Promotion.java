@@ -5,6 +5,8 @@ public class Promotion {
     public static final String NONE = "none";
     public static final String EVERY_3RD_IS_FREE = "thirdFree";
 
+    public static final String INVALID_PROMOTION_TYPE = "Invalid promotion type!";
+
     private String type;
     private double amount;
 

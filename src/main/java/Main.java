@@ -7,6 +7,7 @@ import static POJOS.Markup.PER_UNIT;
 import static POJOS.Promotion.EVERY_3RD_IS_FREE;
 import static POJOS.Promotion.NONE;
 
+//values should be taken from the database and not hard coded directly
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -18,7 +19,7 @@ public class Main {
         int orderedAmountOfProductD = Integer.parseInt(input[4]);
 
 
-        HashMap<Product, Integer> orderMap = new HashMap<>();
+        LinkedHashMap<Product, Integer> orderMap = new LinkedHashMap<>();
 
         if (orderedAmountOfProductA != 0) {
             Product productA = initializeProduct(0.8, PERCENTAGE, NONE, 0, "product A", UnitCost.UNIT_COST_PRODUCT_A);
@@ -65,6 +66,4 @@ public class Main {
 
         return product;
     }
-    //values should be taken from the database and not hard coded directly
-
 }

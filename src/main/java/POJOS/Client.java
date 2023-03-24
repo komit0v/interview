@@ -68,10 +68,8 @@ public class Client {
             System.out.println(String.format("Basic Client Discount: -%.2f EUR", calcBasicClientDiscount()));
         }
 
-        double volumeDiscount = calcVolumeDiscount();
-
-        if (volumeDiscount != 0) {
-            System.out.println(String.format("Additional Volume Discount: -%.2f EUR", volumeDiscount));
+        if (calcVolumeDiscount() != 0) {
+            System.out.println(String.format("Additional Volume Discount: -%.2f EUR", calcVolumeDiscount()));
         }
     }
 }
