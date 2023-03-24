@@ -1,5 +1,8 @@
 package POJOS;
 
+import POJOS.Exceptions.NoSuchMarkupTypeException;
+import POJOS.Exceptions.NoSuchPromotionTypeException;
+
 import static POJOS.Markup.*;
 import static POJOS.Promotion.INVALID_PROMOTION_TYPE;
 
@@ -29,24 +32,24 @@ public final class Product {
         return promotion;
     }
 
-    public double calcUnitPrice() {
+    public double calcUnitPrice() throws NoSuchMarkupTypeException {
         if (markup.getType().equals(PERCENTAGE)) {
             return unitCost + (unitCost * markup.getAmount());
         } else if (markup.getType().equals(PER_UNIT)) {
             return unitCost + markup.getAmount();
         } else {
-            throw new IllegalArgumentException(INVALID_MARKUP_TYPE);
+            throw new NoSuchMarkupTypeException(INVALID_MARKUP_TYPE);
         }
     }
 
-    public double calcPromotionalUnitPrice() {
+    public double calcPromotionalUnitPrice() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         double calcUnitPrice = calcUnitPrice();
         if (promotion.getType().equals(Promotion.NONE)) {
             return calcUnitPrice;
         } else if (promotion.getType().equals(Promotion.PERCENTAGE)) {
             return calcUnitPrice - (calcUnitPrice * promotion.getAmount());
         } else {
-            throw new IllegalArgumentException(INVALID_PROMOTION_TYPE);
+            throw new NoSuchPromotionTypeException(INVALID_PROMOTION_TYPE);
         }
 
     }

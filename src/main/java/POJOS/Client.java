@@ -1,5 +1,8 @@
 package POJOS;
 
+import POJOS.Exceptions.NoSuchMarkupTypeException;
+import POJOS.Exceptions.NoSuchPromotionTypeException;
+
 public class Client {
     private Order order;
     private int id;
@@ -37,15 +40,15 @@ public class Client {
         }
     }
 
-    public double calcBasicClientDiscount() {
+    public double calcBasicClientDiscount() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         return order.getLineTotalBeforeClientDiscounts() * basicDiscount;
     }
 
-    public double calcPriceAfterBasicClientDiscount() {
+    public double calcPriceAfterBasicClientDiscount() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         return order.getLineTotalBeforeClientDiscounts() - calcBasicClientDiscount();
     }
 
-    public double calcVolumeDiscount() {
+    public double calcVolumeDiscount() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         if (calcPriceAfterBasicClientDiscount() > 10000 && calcPriceAfterBasicClientDiscount() <= 30000) {
             return calcPriceAfterBasicClientDiscount() * additionalVolumeDiscountOver10k;
         } else if (calcPriceAfterBasicClientDiscount() > 30000) {
@@ -55,15 +58,15 @@ public class Client {
         }
     }
 
-    public double calcTotalOrderPriceToPay() {
+    public double calcTotalOrderPriceToPay() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         return calcPriceAfterBasicClientDiscount() - calcVolumeDiscount();
     }
 
-    public void printFinalPrice() {
+    public void printFinalPrice() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         System.out.println(String.format("Order Total Amount: %.2f EUR", calcTotalOrderPriceToPay()));
     }
 
-    public void printDiscounts() {
+    public void printDiscounts() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         if (calcBasicClientDiscount() != 0) {
             System.out.println(String.format("Basic Client Discount: -%.2f EUR", calcBasicClientDiscount()));
         }

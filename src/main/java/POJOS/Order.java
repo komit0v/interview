@@ -1,5 +1,8 @@
 package POJOS;
 
+import POJOS.Exceptions.NoSuchMarkupTypeException;
+import POJOS.Exceptions.NoSuchPromotionTypeException;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,7 +17,7 @@ public final class Order {
     }
 
 
-    public double getProductPriceAfterPromotion(Product product, int amount) {
+    public double getProductPriceAfterPromotion(Product product, int amount) throws NoSuchMarkupTypeException, NoSuchPromotionTypeException {
         if (product.getPromotion().getType().equals(EVERY_3RD_IS_FREE)) {
             return ((product.calcUnitPrice() * amount) - (Math.floor(amount / 3) * product.calcUnitPrice())) / amount;
         } else if (product.getPromotion().getType().equals(PERCENTAGE)) {
@@ -22,13 +25,13 @@ public final class Order {
         } else if (product.getPromotion().getType().equals(NONE)) {
             return product.calcUnitPrice();
         } else {
-            throw new IllegalArgumentException(INVALID_PROMOTION_TYPE);
+            throw new NoSuchPromotionTypeException(INVALID_PROMOTION_TYPE);
         }
 
     }
 
 
-    public double getLineTotal(Product product, int amount) {
+    public double getLineTotal(Product product, int amount) throws NoSuchMarkupTypeException, NoSuchPromotionTypeException {
         if (product.getPromotion().getType().equals(EVERY_3RD_IS_FREE)) {
             return ((product.calcUnitPrice() * amount) - (Math.floor(amount / 3) * product.calcUnitPrice()));
         } else if (product.getPromotion().getType().equals(PERCENTAGE)) {
@@ -36,7 +39,7 @@ public final class Order {
         } else if (product.getPromotion().getType().equals(NONE)) {
             return product.calcUnitPrice() * amount;
         } else {
-            throw new IllegalArgumentException(INVALID_PROMOTION_TYPE);
+            throw new NoSuchPromotionTypeException(INVALID_PROMOTION_TYPE);
         }
     }
 
@@ -44,22 +47,27 @@ public final class Order {
 
         orderMap.forEach((key, value) -> {
             if (value != 0) {
-
-                if (key.getPromotion().getType().equals(NONE)) {
-                    System.out.println
-                            (String.format("Units ordered from %s: %d, Base Unit Price: %.2f EUR, Line Total: %.2f EUR",
-                                    key.getName(), value, key.calcUnitPrice(), getLineTotal(key, value)));
-                } else {
-                    System.out.println
-                            (String.format
-                                    ("Units ordered from %s: %d, Base Unit Price: %.2f EUR, Promotional Unit Price: %.2f EUR, Line Total: %.2f EUR",
-                                            key.getName(), value, key.calcUnitPrice(), getProductPriceAfterPromotion(key, value), getLineTotal(key, value)));
+                try {
+                    if (key.getPromotion().getType().equals(NONE)) {
+                        System.out.println
+                                (String.format("Units ordered from %s: %d, Base Unit Price: %.2f EUR, Line Total: %.2f EUR",
+                                        key.getName(), value, key.calcUnitPrice(), getLineTotal(key, value)));
+                    } else {
+                        System.out.println
+                                (String.format
+                                        ("Units ordered from %s: %d, Base Unit Price: %.2f EUR, Promotional Unit Price: %.2f EUR, Line Total: %.2f EUR",
+                                                key.getName(), value, key.calcUnitPrice(), getProductPriceAfterPromotion(key, value), getLineTotal(key, value)));
+                    }
+                } catch (NoSuchMarkupTypeException | NoSuchPromotionTypeException e) {
+                    System.out.println(e.getMessage());
                 }
             }
         });
+
+
     }
 
-    public double getLineTotalBeforeClientDiscounts() {
+    public double getLineTotalBeforeClientDiscounts() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         double sum = 0;
         for (Map.Entry<Product, Integer> entry : orderMap.entrySet()) {
             sum += getLineTotal(entry.getKey(), entry.getValue());

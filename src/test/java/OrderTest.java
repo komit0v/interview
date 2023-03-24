@@ -1,3 +1,5 @@
+import POJOS.Exceptions.NoSuchMarkupTypeException;
+import POJOS.Exceptions.NoSuchPromotionTypeException;
 import POJOS.Markup;
 import POJOS.Order;
 import POJOS.Product;
@@ -12,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class OrderTest {
 
     @Test
-    public void testProductPriceAfterPromotionEveryThirdIsFree(){
+    public void testProductPriceAfterPromotionEveryThirdIsFree() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productD",0.60, new Markup(1, Markup.PER_UNIT), new Promotion(Promotion.EVERY_3RD_IS_FREE, 0));
         LinkedHashMap<Product, Integer> map = new LinkedHashMap<>();
@@ -25,7 +27,7 @@ public class OrderTest {
     }
 
     @Test
-    public void testProductPriceAfterPromotionPercentage(){
+    public void testProductPriceAfterPromotionPercentage() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productB",0.38, new Markup(1.2, Markup.PERCENTAGE), new Promotion(Promotion.PERCENTAGE, 0.3));
 
@@ -39,7 +41,7 @@ public class OrderTest {
     }
 
     @Test
-    public void testProductPriceAfterPromotionWithNoPromotion(){
+    public void testProductPriceAfterPromotionWithNoPromotion() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productA",0.52, new Markup(0.8, Markup.PERCENTAGE), new Promotion(Promotion.NONE, 0));
 
@@ -52,8 +54,8 @@ public class OrderTest {
         assertEquals(expected, actual, 0.001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testProductPriceAfterPromotionShouldThrowException(){
+    @Test(expected = NoSuchPromotionTypeException.class)
+    public void testProductPriceAfterPromotionShouldThrowException() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productA",0.52, new Markup(0.8, Markup.PERCENTAGE), new Promotion("Invalid", 0));
 
@@ -65,7 +67,7 @@ public class OrderTest {
     }
 
     @Test
-    public void testLineTotalForPromotionEveryThirdIsFree(){
+    public void testLineTotalForPromotionEveryThirdIsFree() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productD",0.60, new Markup(1, Markup.PER_UNIT), new Promotion(Promotion.EVERY_3RD_IS_FREE, 0));
         LinkedHashMap<Product, Integer> map = new LinkedHashMap<>();
@@ -78,7 +80,7 @@ public class OrderTest {
     }
 
     @Test
-    public void testLineTotalForPromotionPercentage() {
+    public void testLineTotalForPromotionPercentage() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productB",0.38, new Markup(1.2, Markup.PERCENTAGE), new Promotion(Promotion.PERCENTAGE, 0.3));
 
@@ -91,8 +93,8 @@ public class OrderTest {
         assertEquals(expected, actual, 0.001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testLineTotalShouldThrowException(){
+    @Test(expected = NoSuchPromotionTypeException.class)
+    public void testLineTotalShouldThrowException() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productB",0.38, new Markup(1.2, Markup.PERCENTAGE), new Promotion("Invalid", 0.3));
 

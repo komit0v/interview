@@ -1,3 +1,5 @@
+import POJOS.Exceptions.NoSuchMarkupTypeException;
+import POJOS.Exceptions.NoSuchPromotionTypeException;
 import POJOS.Markup;
 import POJOS.Product;
 import POJOS.Promotion;
@@ -9,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class ProductTest {
 
     @Test
-    public void testCalcUnitPriceWithPercentage(){
+    public void testCalcUnitPriceWithPercentage() throws NoSuchMarkupTypeException {
         Product product =
                 new Product("productA",0.52, new Markup(0.8, Markup.PERCENTAGE), new Promotion(Promotion.NONE, 0));
 
@@ -19,7 +21,7 @@ public class ProductTest {
     }
 
     @Test
-    public void testCalcUnitPriceWithPerUnit(){
+    public void testCalcUnitPriceWithPerUnit() throws NoSuchMarkupTypeException {
         Product product =
                 new Product("productC",0.41, new Markup(0.9, Markup.PER_UNIT), new Promotion(Promotion.NONE, 0));
 
@@ -28,8 +30,8 @@ public class ProductTest {
         assertEquals(expected, actual, 0.001);
     }
 
-    @Test (expected = IllegalArgumentException.class)
-    public void testCalcUnitPriceShouldThrowException(){
+    @Test (expected = NoSuchMarkupTypeException.class)
+    public void testCalcUnitPriceShouldThrowException() throws NoSuchMarkupTypeException {
         Product product =
                 new Product("productC",0.41, new Markup(0.9, "Invalid"), new Promotion(Promotion.NONE, 0));
 
@@ -37,7 +39,7 @@ public class ProductTest {
     }
 
     @Test
-    public void testCalcPromotionalUnitPriceWithNoPromotion(){
+    public void testCalcPromotionalUnitPriceWithNoPromotion() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productA",0.52, new Markup(0.8, Markup.PERCENTAGE), new Promotion(Promotion.NONE, 0));
 
@@ -47,7 +49,7 @@ public class ProductTest {
     }
 
     @Test
-    public void tesCalcPromotionalUnitPriceWithPercentage(){
+    public void tesCalcPromotionalUnitPriceWithPercentage() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productB",0.38, new Markup(1.2, Markup.PERCENTAGE), new Promotion(Promotion.PERCENTAGE, 0.3));
 
@@ -56,8 +58,8 @@ public class ProductTest {
         assertEquals(expected, actual, 0.001);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCalPromotionShouldThrowException(){
+    @Test(expected = NoSuchPromotionTypeException.class)
+    public void testCalPromotionShouldThrowException() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productB",0.38, new Markup(1.2, Markup.PERCENTAGE), new Promotion("Invalid", 0.3));
         product.calcPromotionalUnitPrice();

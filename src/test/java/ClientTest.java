@@ -1,4 +1,6 @@
 import POJOS.*;
+import POJOS.Exceptions.NoSuchMarkupTypeException;
+import POJOS.Exceptions.NoSuchPromotionTypeException;
 import org.junit.Test;
 
 import java.util.LinkedHashMap;
@@ -9,7 +11,7 @@ public class ClientTest {
 
 
     @Test
-    public void testCalcBasicClientDiscount() {
+    public void testCalcBasicClientDiscount() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productA", 0.52, new Markup(0.8, Markup.PERCENTAGE), new Promotion(Promotion.NONE, 0));
 
@@ -24,7 +26,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testCalcPriceAfterBasicClientDiscount(){
+    public void testCalcPriceAfterBasicClientDiscount() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productA", 0.52, new Markup(0.8, Markup.PERCENTAGE), new Promotion(Promotion.NONE, 0));
         LinkedHashMap<Product, Integer> map = new LinkedHashMap<>();
@@ -38,7 +40,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testCalcVolumeDiscountBetween10000And30000(){
+    public void testCalcVolumeDiscountBetween10000And30000() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productA", 0.52, new Markup(0.8, Markup.PERCENTAGE), new Promotion(Promotion.NONE, 0));
         LinkedHashMap<Product, Integer> map = new LinkedHashMap<>();
@@ -52,7 +54,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testCalcVolumeDiscountOver30000(){
+    public void testCalcVolumeDiscountOver30000() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productA", 0.52, new Markup(0.8, Markup.PERCENTAGE), new Promotion(Promotion.NONE, 0));
         LinkedHashMap<Product, Integer> map = new LinkedHashMap<>();
@@ -66,7 +68,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testCalcVolumeUnder1000(){
+    public void testCalcVolumeUnder1000() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productA", 0.52, new Markup(0.8, Markup.PERCENTAGE), new Promotion(Promotion.NONE, 0));
         LinkedHashMap<Product, Integer> map = new LinkedHashMap<>();
@@ -74,13 +76,13 @@ public class ClientTest {
         Order order = new Order(map);
         Client client = new Client(order, 5);
 
-        double expected = 93.6;
+        double expected = 0;
         double actual = client.calcVolumeDiscount();
         assertEquals(expected,actual,0.001);
     }
 
     @Test
-    public void testCalcTotalOrderPriceToPay(){
+    public void testCalcTotalOrderPriceToPay() throws NoSuchPromotionTypeException, NoSuchMarkupTypeException {
         Product product =
                 new Product("productA", 0.52, new Markup(0.8, Markup.PERCENTAGE), new Promotion(Promotion.NONE, 0));
         LinkedHashMap<Product, Integer> map = new LinkedHashMap<>();

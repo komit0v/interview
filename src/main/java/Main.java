@@ -1,4 +1,6 @@
 import POJOS.*;
+import POJOS.Exceptions.NoSuchMarkupTypeException;
+import POJOS.Exceptions.NoSuchPromotionTypeException;
 
 import java.util.*;
 
@@ -43,15 +45,19 @@ public class Main {
 
         Order order = new Order(orderMap);
         if (clientID > 0 && clientID < 6) {
-            Client client = new Client(order, clientID);
+            try {
+                Client client = new Client(order, clientID);
 
-            order.printEachOrderedProduct();
-            System.out.println(String.format("Total amount before client discounts: %.2f", order.getLineTotalBeforeClientDiscounts()));
-            client.printDiscounts();
-            client.printFinalPrice();
+                order.printEachOrderedProduct();
+                System.out.println(String.format("Total amount before client discounts: %.2f", order.getLineTotalBeforeClientDiscounts()));
+                client.printDiscounts();
+                client.printFinalPrice();
+            } catch (NoSuchMarkupTypeException | NoSuchPromotionTypeException exception){
+                System.out.println(exception.getMessage());
+            }
 
         } else {
-            throw new IllegalArgumentException("No such client!");
+            System.out.println(("No such client!"));
         }
 
 
